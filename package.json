@@ -1,14 +1,14 @@
 {
-  "name": "APPNAME",
+  "name": "kart-racers",
   "private": true,
   "packageManager": "pnpm@10.30.3",
   "engines": { "node": ">=22" },
   "pnpm": { "onlyBuiltDependencies": ["esbuild"] },
   "scripts": {
-    "dev": "pnpm --filter @APPNAME/web dev",
-    "build": "pnpm --filter @APPNAME/web build",
-    "preview": "pnpm --filter @APPNAME/web preview",
-    "typecheck": "pnpm --filter @APPNAME/web exec tsc -b",
-    "test": "pnpm --filter @APPNAME/web test"
+    "dev": "pnpm --filter @kart-racers/web dev",
+    "build": "pnpm --filter @kart-racers/web build",
+    "preview": "pnpm --filter @kart-racers/web preview",
+    "typecheck": "pnpm --filter @kart-racers/web exec tsc -b",
+    "test": "pnpm --filter @kart-racers/web test"
   }
 }
