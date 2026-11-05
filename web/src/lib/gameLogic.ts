@@ -36,8 +36,8 @@ export function createKarts(count: number): Kart[] {
       lane: (i % 2 === 0 ? -0.35 : 0.35),
       speed: 0,
       angle: 0,
-      color: KART_COLORS[i % KART_COLORS.length],
-      name: KART_NAMES[i % KART_NAMES.length],
+      color: KART_COLORS[i % KART_COLORS.length]!,
+      name: KART_NAMES[i % KART_NAMES.length]!,
       lap: 0,
       lapProgress: 1 - startOffset, // near finish line (will cross to start lap 1)
       totalProgress: -startOffset,
@@ -57,7 +57,7 @@ export function createKarts(count: number): Kart[] {
 }
 
 export function createItems(): Item[] {
-  return ITEM_POSITIONS.map((pos, i) => ({
+  return ITEM_POSITIONS.map((pos) => ({
     id: nextId(),
     trackPos: pos.trackPos,
     lane: pos.lane,
@@ -305,7 +305,7 @@ export function spawnStarParticles(x: number, y: number, count: number): Particl
       vy: Math.sin(angle) * 60,
       life: 0.8,
       maxLife: 0.8,
-      color: ["#fbbf24", "#f59e0b", "#ef4444", "#ec4899"][i % 4],
+      color: ["#fbbf24", "#f59e0b", "#ef4444", "#ec4899"][i % 4]!,
       size: 6,
     });
   }
@@ -314,7 +314,7 @@ export function spawnStarParticles(x: number, y: number, count: number): Particl
 
 export function updateParticles(particles: Particle[], dt: number): void {
   for (let i = particles.length - 1; i >= 0; i--) {
-    const p = particles[i];
+    const p = particles[i]!;
     p.x += p.vx * dt;
     p.y += p.vy * dt;
     p.life -= dt;

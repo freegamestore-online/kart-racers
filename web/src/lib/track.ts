@@ -53,10 +53,10 @@ export function getTrackPoints(): TrackPoint[] {
   const n = pts.length;
   const result: TrackPoint[] = [];
   for (let i = 0; i < n; i++) {
-    const p0 = pts[(i - 1 + n) % n];
-    const p1 = pts[i];
-    const p2 = pts[(i + 1) % n];
-    const p3 = pts[(i + 2) % n];
+    const p0 = pts[(i - 1 + n) % n]!;
+    const p1 = pts[i]!;
+    const p2 = pts[(i + 1) % n]!;
+    const p3 = pts[(i + 2) % n]!;
     const stepsPerSpan = Math.floor(NUM_CURVE_STEPS / n);
     for (let j = 0; j < stepsPerSpan; j++) {
       result.push(catmullRom(p0, p1, p2, p3, j / stepsPerSpan));
@@ -74,12 +74,12 @@ export function trackPosToWorld(t: number, lane: number, canvasW: number, canvas
   const next = (idx + 1) % n;
   const frac = (t * n) % 1;
 
-  const cx = pts[idx].x * canvasW + (pts[next].x - pts[idx].x) * canvasW * frac;
-  const cy = pts[idx].y * canvasH + (pts[next].y - pts[idx].y) * canvasH * frac;
+  const cx = pts[idx]!.x * canvasW + (pts[next]!.x - pts[idx]!.x) * canvasW * frac;
+  const cy = pts[idx]!.y * canvasH + (pts[next]!.y - pts[idx]!.y) * canvasH * frac;
 
   // tangent for perpendicular lane offset
-  const tx = (pts[next].x - pts[idx].x) * canvasW;
-  const ty = (pts[next].y - pts[idx].y) * canvasH;
+  const tx = (pts[next]!.x - pts[idx]!.x) * canvasW;
+  const ty = (pts[next]!.y - pts[idx]!.y) * canvasH;
   const len = Math.sqrt(tx * tx + ty * ty) || 1;
   const nx = -ty / len;
   const ny = tx / len;
@@ -106,8 +106,8 @@ export function getArcLengths(): { lengths: number[]; total: number } {
   _totalLength = 0;
   for (let i = 0; i < n; i++) {
     const next = (i + 1) % n;
-    const dx = pts[next].x - pts[i].x;
-    const dy = pts[next].y - pts[i].y;
+    const dx = pts[next]!.x - pts[i]!.x;
+    const dy = pts[next]!.y - pts[i]!.y;
     const d = Math.sqrt(dx * dx + dy * dy);
     _arcLengths[i] = d;
     _totalLength += d;
@@ -151,10 +151,10 @@ export function getTrackCurvature(t: number): number {
   const i = ((t * n) | 0) % n;
   const prev = (i - 1 + n) % n;
   const next = (i + 1) % n;
-  const ax = pts[i].x - pts[prev].x;
-  const ay = pts[i].y - pts[prev].y;
-  const bx = pts[next].x - pts[i].x;
-  const by = pts[next].y - pts[i].y;
+  const ax = pts[i]!.x - pts[prev]!.x;
+  const ay = pts[i]!.y - pts[prev]!.y;
+  const bx = pts[next]!.x - pts[i]!.x;
+  const by = pts[next]!.y - pts[i]!.y;
   // cross product z gives curvature sign
   return ax * by - ay * bx;
 }

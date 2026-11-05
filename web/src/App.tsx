@@ -288,7 +288,7 @@ export default function App() {
   void nextId; // suppress unused
 
   return (
-    <GameShell topbar={<GameTopbar title="Kart Racers" score={score} highScore={highScore} />}>
+    <GameShell topbar={<GameTopbar title="Kart Racers" score={score} stats={[{ label: "Best", value: highScore }]} />}>
       <div className="relative w-full h-full overflow-hidden" style={{ background: "var(--surface)" }}>
         {/* Game Canvas */}
         <canvas

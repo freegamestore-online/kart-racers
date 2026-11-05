@@ -45,13 +45,13 @@ export function drawTrack(ctx: CanvasRenderingContext2D, canvasW: number, canvas
 
   for (let i = 0; i < n; i++) {
     const next = (i + 1) % n;
-    const tx = (pts[next].x - pts[i].x) * canvasW;
-    const ty = (pts[next].y - pts[i].y) * canvasH;
+    const tx = (pts[next]!.x - pts[i]!.x) * canvasW;
+    const ty = (pts[next]!.y - pts[i]!.y) * canvasH;
     const len = Math.sqrt(tx * tx + ty * ty) || 1;
     const nx = -ty / len;
     const ny = tx / len;
-    const wx = pts[i].x * canvasW;
-    const wy = pts[i].y * canvasH;
+    const wx = pts[i]!.x * canvasW;
+    const wy = pts[i]!.y * canvasH;
     leftPts.push({ x: wx + nx * tw, y: wy + ny * tw });
     rightPts.push({ x: wx - nx * tw, y: wy - ny * tw });
     kerbLeftPts.push({ x: wx + nx * (tw + 6), y: wy + ny * (tw + 6) });
@@ -64,19 +64,19 @@ export function drawTrack(ctx: CanvasRenderingContext2D, canvasW: number, canvas
     const kerbColor = Math.floor(i / kerbSegLen) % 2 === 0 ? KERB_A : KERB_B;
     const next = (i + 1) % n;
     ctx.beginPath();
-    ctx.moveTo(kerbLeftPts[i].x, kerbLeftPts[i].y);
-    ctx.lineTo(kerbLeftPts[next].x, kerbLeftPts[next].y);
-    ctx.lineTo(leftPts[next].x, leftPts[next].y);
-    ctx.lineTo(leftPts[i].x, leftPts[i].y);
+    ctx.moveTo(kerbLeftPts[i]!.x, kerbLeftPts[i]!.y);
+    ctx.lineTo(kerbLeftPts[next]!.x, kerbLeftPts[next]!.y);
+    ctx.lineTo(leftPts[next]!.x, leftPts[next]!.y);
+    ctx.lineTo(leftPts[i]!.x, leftPts[i]!.y);
     ctx.closePath();
     ctx.fillStyle = kerbColor;
     ctx.fill();
 
     ctx.beginPath();
-    ctx.moveTo(kerbRightPts[i].x, kerbRightPts[i].y);
-    ctx.lineTo(kerbRightPts[next].x, kerbRightPts[next].y);
-    ctx.lineTo(rightPts[next].x, rightPts[next].y);
-    ctx.lineTo(rightPts[i].x, rightPts[i].y);
+    ctx.moveTo(kerbRightPts[i]!.x, kerbRightPts[i]!.y);
+    ctx.lineTo(kerbRightPts[next]!.x, kerbRightPts[next]!.y);
+    ctx.lineTo(rightPts[next]!.x, rightPts[next]!.y);
+    ctx.lineTo(rightPts[i]!.x, rightPts[i]!.y);
     ctx.closePath();
     ctx.fillStyle = kerbColor;
     ctx.fill();
@@ -84,11 +84,11 @@ export function drawTrack(ctx: CanvasRenderingContext2D, canvasW: number, canvas
 
   // Draw road surface
   ctx.beginPath();
-  ctx.moveTo(leftPts[0].x, leftPts[0].y);
-  for (let i = 1; i < n; i++) ctx.lineTo(leftPts[i].x, leftPts[i].y);
+  ctx.moveTo(leftPts[0]!.x, leftPts[0]!.y);
+  for (let i = 1; i < n; i++) ctx.lineTo(leftPts[i]!.x, leftPts[i]!.y);
   ctx.closePath();
-  ctx.moveTo(rightPts[0].x, rightPts[0].y);
-  for (let i = 1; i < n; i++) ctx.lineTo(rightPts[i].x, rightPts[i].y);
+  ctx.moveTo(rightPts[0]!.x, rightPts[0]!.y);
+  for (let i = 1; i < n; i++) ctx.lineTo(rightPts[i]!.x, rightPts[i]!.y);
   ctx.closePath();
   ctx.fillStyle = ROAD_COLOR;
   ctx.fill("evenodd");
@@ -97,13 +97,13 @@ export function drawTrack(ctx: CanvasRenderingContext2D, canvasW: number, canvas
   ctx.strokeStyle = ROAD_EDGE;
   ctx.lineWidth = 3;
   ctx.beginPath();
-  ctx.moveTo(leftPts[0].x, leftPts[0].y);
-  for (let i = 1; i < n; i++) ctx.lineTo(leftPts[i].x, leftPts[i].y);
+  ctx.moveTo(leftPts[0]!.x, leftPts[0]!.y);
+  for (let i = 1; i < n; i++) ctx.lineTo(leftPts[i]!.x, leftPts[i]!.y);
   ctx.closePath();
   ctx.stroke();
   ctx.beginPath();
-  ctx.moveTo(rightPts[0].x, rightPts[0].y);
-  for (let i = 1; i < n; i++) ctx.lineTo(rightPts[i].x, rightPts[i].y);
+  ctx.moveTo(rightPts[0]!.x, rightPts[0]!.y);
+  for (let i = 1; i < n; i++) ctx.lineTo(rightPts[i]!.x, rightPts[i]!.y);
   ctx.closePath();
   ctx.stroke();
 
@@ -112,8 +112,8 @@ export function drawTrack(ctx: CanvasRenderingContext2D, canvasW: number, canvas
   ctx.lineWidth = 2;
   ctx.setLineDash([20, 20]);
   ctx.beginPath();
-  ctx.moveTo(pts[0].x * canvasW, pts[0].y * canvasH);
-  for (let i = 1; i < n; i++) ctx.lineTo(pts[i].x * canvasW, pts[i].y * canvasH);
+  ctx.moveTo(pts[0]!.x * canvasW, pts[0]!.y * canvasH);
+  for (let i = 1; i < n; i++) ctx.lineTo(pts[i]!.x * canvasW, pts[i]!.y * canvasH);
   ctx.closePath();
   ctx.stroke();
   ctx.setLineDash([]);
@@ -121,13 +121,10 @@ export function drawTrack(ctx: CanvasRenderingContext2D, canvasW: number, canvas
   // Finish line
   const fi = 0;
   const fn = (fi + 1) % n;
-  const ftx = (pts[fn].x - pts[fi].x) * canvasW;
-  const fty = (pts[fn].y - pts[fi].y) * canvasH;
-  const flen = Math.sqrt(ftx * ftx + fty * fty) || 1;
-  const fnx = -fty / flen;
-  const fny = ftx / flen;
-  const fx = pts[fi].x * canvasW;
-  const fy = pts[fi].y * canvasH;
+  const ftx = (pts[fn]!.x - pts[fi]!.x) * canvasW;
+  const fty = (pts[fn]!.y - pts[fi]!.y) * canvasH;
+  const fx = pts[fi]!.x * canvasW;
+  const fy = pts[fi]!.y * canvasH;
   // Checkerboard finish line
   const squares = 8;
   const sqW = (tw * 2) / squares;
